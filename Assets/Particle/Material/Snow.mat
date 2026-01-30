@@ -119,9 +119,9 @@ Material:
     - _Float19: 0
     - _Float2: 0
     - _Float20: 0
-    - _Float23: 1
+    - _Float23: 1.35
     - _Float24: 0
-    - _Float25: 1
+    - _Float25: 0.6
     - _Float26: 0
     - _Float27: 0
     - _Float28: 0
@@ -161,3 +161,4 @@ Material:
     - _Color2: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
