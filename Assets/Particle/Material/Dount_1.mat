@@ -44,13 +44,13 @@ Material:
     - _DissolveTex:
         m_Texture: {fileID: 2800000, guid: 8845e401b086ba140a01aaa0e98fa8d8, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: -2.98, y: 0}
+        m_Offset: {x: 0, y: 0}
     - _Distortion1Tex1:
-        m_Texture: {fileID: 2800000, guid: 89f2a57aa674eed42aa732a9a3c9a982, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Distortion2Tex1:
-        m_Texture: {fileID: 2800000, guid: 4f890b67c2b2e2c4caa0276336319683, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -58,15 +58,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f334d4ee180308f4ca3581d29b75297e, type: 3}
-        m_Scale: {x: 1, y: 4.78}
+        m_Texture: {fileID: 2800000, guid: fca039c62d4f69947a6cadd56289a0c4, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex1:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex2:
-        m_Texture: {fileID: 2800000, guid: 878ce137befa6084db917fb0c0729191, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -109,9 +109,9 @@ Material:
     - _Distortion2: 1
     - _Distortion2V: -1.4
     - _DstBlend: 0
-    - _Float1: 78
+    - _Float1: 90
     - _Float10: 3.11
-    - _Float11: 0
+    - _Float11: 360
     - _Float12: 0
     - _Float15: 0
     - _Float16: 0
@@ -127,10 +127,10 @@ Material:
     - _Float27: 0
     - _Float28: 0
     - _Float29: 0
-    - _Float5: 0.332
+    - _Float5: 0.507
     - _Float6: 0.735
     - _Float7: 0.16
-    - _Float9: 0.629
+    - _Float9: 0.696
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -162,3 +162,4 @@ Material:
     - _Color2: {r: 1, g: 0.42438906, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
