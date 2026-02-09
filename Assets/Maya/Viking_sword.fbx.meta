@@ -3,7 +3,32 @@ guid: 7121815285ef29747be9bebeef3d6e29
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sword_Blade1
+    second: {fileID: 2100000, guid: f5f08464a86aabb4fb12ed8923926e7a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sword_Blade2
+    second: {fileID: 2100000, guid: b0bf4302bb87af34ca67800dbd2d3de9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sword_Guard
+    second: {fileID: 2100000, guid: d6b1b26ef4bf6dd469f3d84084007a58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sword_Handle
+    second: {fileID: 2100000, guid: 0dec71b5ecfae374a833bbe9ef022cf3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sword_Pommel
+    second: {fileID: 2100000, guid: 799c6b0bfe2436d448ae7f705fb3d23c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

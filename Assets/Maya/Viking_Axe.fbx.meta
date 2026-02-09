@@ -3,7 +3,17 @@ guid: d8b7055b32188d144b693ecc1fa2a3c3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Axe_ax
+    second: {fileID: 2100000, guid: 343ce955e3ddec04a88513753da7c7d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Axe_handle
+    second: {fileID: 2100000, guid: a6a59f3ef6cbf2c418a6f15eeb191b1e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

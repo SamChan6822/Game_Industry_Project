@@ -3,7 +3,37 @@ guid: 8982cc55cdc65814dac6444cedb3a228
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ball_broken_Big
+    second: {fileID: 2100000, guid: c2bb16b1f7f6b534e946cf68d757eb3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Broken_16balls
+    second: {fileID: 2100000, guid: 04fdba4748d010b46ae1280a1ac79b7a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Broken_6balls
+    second: {fileID: 2100000, guid: b07fecbd5f8ed2441b17dd235d578b90, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Broken_Disc
+    second: {fileID: 2100000, guid: d71648c00e6d44744b0457ff6606bc6b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Broken_Donut_inside
+    second: {fileID: 2100000, guid: f4c0e2410c5508a4385543002330dcd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Broken_Donut_outside
+    second: {fileID: 2100000, guid: 5e542dcbf0eff8f46868893c564e5b92, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

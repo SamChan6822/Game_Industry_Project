@@ -3,7 +3,42 @@ guid: 7ceb2f11f7215b440aec27195fb3f65d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ball_Big
+    second: {fileID: 2100000, guid: 4451f21a5dc74bd40b69871a5dd869f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_16balls
+    second: {fileID: 2100000, guid: 53a6b41125ac7344e956b7fc4721bb27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_6balls
+    second: {fileID: 2100000, guid: 77d3fcc465846df4e9b24c13170f14ba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Disc
+    second: {fileID: 2100000, guid: f771a2c0064b64c4abd50e7217201ae2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Donut_inside
+    second: {fileID: 2100000, guid: 3378129d7b85d5f419c11a4f447f1533, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield_Donut_outside
+    second: {fileID: 2100000, guid: b9d2344458edd1245907d96bb9de1246, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader1
+    second: {fileID: 2100000, guid: 25bf26ddf94199c4f819dbf2b3838851, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
