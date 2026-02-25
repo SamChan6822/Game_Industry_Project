@@ -8,17 +8,17 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - Logo
   - Shield
-  - Helmet
   - 
-  - 
-  - 
-  - 
-  - 
+  - Match Found
+  - Match Found helmet
+  - Defeat
+  - Victory
+  - Victory_logo
   - 
   - 
   - 
