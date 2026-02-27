@@ -16,6 +16,7 @@ public class SequenceUIController : MonoBehaviour
     public Camera defeatCamera;
 
     [Header("Timeline Directors")]
+    public PlayableDirector BGDirector;
     public PlayableDirector matchFoundDirector;
     public PlayableDirector victoryDirector;
     public PlayableDirector defeatDirector;
@@ -42,6 +43,7 @@ public class SequenceUIController : MonoBehaviour
         SetOverlayCamerasOff();
 
         // Ensure directors don't autoplay
+        PrepDirector(BGDirector);
         PrepDirector(matchFoundDirector);
         PrepDirector(victoryDirector);
         PrepDirector(defeatDirector);
@@ -66,6 +68,7 @@ public class SequenceUIController : MonoBehaviour
 
     void StopAllDirectors()
     {
+        if (BGDirector) BGDirector.Stop();
         if (matchFoundDirector) matchFoundDirector.Stop();
         if (victoryDirector) victoryDirector.Stop();
         if (defeatDirector) defeatDirector.Stop();
@@ -125,6 +128,7 @@ public class SequenceUIController : MonoBehaviour
         StopAllDirectors();
         EnableOverlayCamera(matchFoundCamera);
         PlayDirectorFromStart(matchFoundDirector);
+        PlayDirectorFromStart(BGDirector);
     }
 
     public void ShowVictory()
@@ -134,6 +138,7 @@ public class SequenceUIController : MonoBehaviour
         StopAllDirectors();
         EnableOverlayCamera(victoryCamera);
         PlayDirectorFromStart(victoryDirector);
+        PlayDirectorFromStart(BGDirector);
     }
 
     public void ShowDefeat()
@@ -143,6 +148,7 @@ public class SequenceUIController : MonoBehaviour
         StopAllDirectors();
         EnableOverlayCamera(defeatCamera);
         PlayDirectorFromStart(defeatDirector);
+        PlayDirectorFromStart(BGDirector);
     }
 
     // -------------------------
