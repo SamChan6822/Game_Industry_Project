@@ -92,6 +92,26 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _texcoord2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - Distortion2U: 0
@@ -100,6 +120,10 @@ Material:
     - _BumpScale: 1
     - _CullMode2: 0
     - _Cutoff: 0.5
+    - _DecalAngleFadeSupported: 1
+    - _DecalMeshBiasType: 0
+    - _DecalMeshDepthBias: 0
+    - _DecalMeshViewBias: 0
     - _Depth: 0
     - _DetailNormalMapScale: 1
     - _Distortion1: 0
@@ -107,7 +131,9 @@ Material:
     - _Distortion1V: 0
     - _Distortion2: 0
     - _Distortion2V: 0
+    - _DrawOrder: 0
     - _DstBlend: 0
+    - _EnvironmentReflections: 1
     - _Float1: 0
     - _Float10: 1
     - _Float11: 0
@@ -142,6 +168,9 @@ Material:
     - _OcclusionStrength: 1
     - _Offset_Z: 0
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
