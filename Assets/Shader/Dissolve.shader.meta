@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 6c05e6a2ca3e0a64f87d222d11ce4f90
 ShaderImporter:
   externalObjects: {}
-  defaultTextures: []
+  defaultTextures:
+  - _Viking_helmet_Helmet_AlbedoTransparency: {fileID: 2800000, guid: 5a74027b662c68e4eb0002cf8159d34e, type: 3}
+  - _Viking_helmet_Helmet_Normal: {fileID: 2800000, guid: 24c79fff1cf299548912ddd8639df554, type: 3}
+  - _Viking_helmet_Helmet_MetallicSmoothness: {fileID: 2800000, guid: 982de22475696854badfc7d035e1cb98, type: 3}
   nonModifiableTextures: []
   userData: 
   assetBundleName: 

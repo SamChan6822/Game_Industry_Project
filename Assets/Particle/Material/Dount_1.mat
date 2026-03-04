@@ -118,6 +118,7 @@ Material:
     - Distortion2U: 1.41
     - _AddOneBlendOneMinusSrcAlpha: 10
     - _AddOneBlendSrcAlpha: 5
+    - _AlphaClip: 0
     - _BumpScale: 1
     - _CullMode2: 0
     - _Cutoff: 0.5
@@ -140,9 +141,9 @@ Material:
     - _Float19: 0.17
     - _Float2: -1.26
     - _Float20: 0
-    - _Float23: 3
+    - _Float23: 2.72
     - _Float24: 0
-    - _Float25: 1
+    - _Float25: 2.36
     - _Float26: 0
     - _Float27: 0
     - _Float28: 0
@@ -182,7 +183,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 1, g: 0, b: 0, a: 1}
-    - _Color2: {r: 1, g: 0.42438906, b: 0, a: 1}
+    - _Color2: {r: 1, g: 0.35822755, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
