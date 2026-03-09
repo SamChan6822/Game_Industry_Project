@@ -154,6 +154,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_DBUFFER_PROJECTOR
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -177,7 +178,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -376,11 +377,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -402,7 +403,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -412,7 +413,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -524,6 +525,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_FORWARD_EMISSIVE_PROJECTOR
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -546,7 +548,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -715,11 +717,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -741,7 +743,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -751,7 +753,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -846,14 +848,14 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma vertex Vert
 			#pragma fragment Frag
 			#pragma multi_compile_instancing
-			#pragma multi_compile_fog
 			#pragma editor_sync_compilation
 
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+			#pragma multi_compile_fragment _ _SCREEN_SPACE_IRRADIANCE
 			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
-			#pragma multi_compile _ _FORWARD_PLUS
+			#pragma multi_compile _ _CLUSTER_LIGHT_LOOP
 			#pragma multi_compile_fragment _ _LIGHT_COOKIES
 			#pragma multi_compile_fragment _ DEBUG_DISPLAY
 			#pragma multi_compile _DECAL_NORMAL_BLEND_LOW _DECAL_NORMAL_BLEND_MEDIUM _DECAL_NORMAL_BLEND_HIGH
@@ -878,6 +880,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_DECAL_SCREEN_SPACE_PROJECTOR
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -900,7 +903,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -1195,7 +1198,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 				half angleFadeFactor = 1.0;
 
-            // Only screen space needs flip logic, other passes do not setup needed properties so we skip here
+            // Only screen space needs flip logic, other passes do not setup needed properties so we skip here 
 			// to-do check DecalScreenSpaceProjector pass
             //#if defined(DECAL_SCREEN_SPACE)
 				//TransformScreenUV(packedInput.positionCS, _ScreenSize.y);
@@ -1203,11 +1206,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -1229,7 +1232,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -1239,7 +1242,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -1363,7 +1366,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma vertex Vert
 			#pragma fragment Frag
 			#pragma multi_compile_instancing
-			#pragma multi_compile_fog
 			#pragma editor_sync_compilation
 
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
@@ -1372,6 +1374,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma multi_compile _ _DECAL_LAYERS
 			#pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
 			#pragma multi_compile_fragment _ _RENDER_PASS_ENABLED
+
+			//fix for SRP Additional Lighting in Deferred+
+			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+			#pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+			#pragma multi_compile _ _CLUSTER_LIGHT_LOOP
 
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
@@ -1391,6 +1398,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_DECAL_GBUFFER_PROJECTOR
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -1402,7 +1410,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ProbeVolumeVariants.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GBufferOutput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
@@ -1414,7 +1422,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -1689,7 +1697,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			}
 
 			void Frag(PackedVaryings packedInput,
-				out FragmentOutput fragmentOutput
+				out GBufferFragOutput fragmentOutput
 				/*ase_frag_input*/
 			)
 			{
@@ -1705,11 +1713,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -1731,7 +1739,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -1741,7 +1749,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -1844,17 +1852,18 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				half3 color = 0;
 			#endif
 
-			// ShaderPassDecal.hlsl
-			// We can not use usual GBuffer functions (etc. BRDFDataToGbuffer) as we use alpha for blending
-			#pragma warning (disable : 3578) // The output value isn't completely initialized.
-				half3 packedNormalWS = PackNormal(surfaceData.normalWS.xyz);
-				fragmentOutput.GBuffer0 = half4(surfaceData.baseColor.rgb, surfaceData.baseColor.a);
-				fragmentOutput.GBuffer1 = 0;
-				fragmentOutput.GBuffer2 = half4(packedNormalWS, surfaceData.normalWS.a);
-				fragmentOutput.GBuffer3 = half4(surfaceData.emissive + color, surfaceData.baseColor.a);
+				// ShaderPassDecal.hlsl
+				// We can not use usual GBuffer functions (etc. BRDFDataToGbuffer) as we use alpha for blending
+				#pragma warning (disable : 3578) // The output value isn't completely initialized.
+				half3 packedNormalWS = PackGBufferNormal(surfaceData.normalWS.xyz);
+				fragmentOutput = (GBufferFragOutput)0;
+				fragmentOutput.gBuffer0 = half4(surfaceData.baseColor.rgb, surfaceData.baseColor.a);
+				fragmentOutput.gBuffer1 = 0;
+				fragmentOutput.gBuffer2 = half4(packedNormalWS, surfaceData.normalWS.a);
+				fragmentOutput.color = half4(surfaceData.emissive + color, surfaceData.baseColor.a);
 
-			#if OUTPUT_SHADOWMASK
-				fragmentOutput.GBuffer4 = inputData.shadowMask; // will have unity_ProbesOcclusion value if subtractive lighting is used (baked)
+			#if defined(GBUFFER_FEATURE_SHADOWMASK)
+				fragmentOutput.shadowMask = inputData.shadowMask; // will have unity_ProbesOcclusion value if subtractive lighting is used (baked)
 			#endif
 
 			#pragma warning (default : 3578) // Restore output value isn't completely initialized.
@@ -1917,6 +1926,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_DBUFFER_MESH
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -1940,7 +1950,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -2163,7 +2173,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);
 				UNITY_SETUP_INSTANCE_ID(packedInput);
 
-			half angleFadeFactor = 1.0;
+				half angleFadeFactor = 1.0;
 
             // Only screen space needs flip logic, other passes do not setup needed properties so we skip here
             #if defined(DECAL_SCREEN_SPACE)
@@ -2172,11 +2182,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -2198,7 +2208,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -2208,7 +2218,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -2287,6 +2297,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_FORWARD_EMISSIVE_MESH
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -2309,7 +2320,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -2529,11 +2540,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -2555,7 +2566,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -2565,7 +2576,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -2626,20 +2637,21 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma vertex Vert
 			#pragma fragment Frag
 			#pragma multi_compile_instancing
-			#pragma multi_compile_fog
 			#pragma editor_sync_compilation
 
 			#pragma multi_compile _ LIGHTMAP_ON
 			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
 			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#pragma multi_compile _ LIGHTMAP_BICUBIC_SAMPLING
+			#pragma multi_compile _ REFLECTION_PROBE_ROTATION
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 			#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
 			#pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
 			#pragma multi_compile _ SHADOWS_SHADOWMASK
-			#pragma multi_compile _ _FORWARD_PLUS
+			#pragma multi_compile _ _CLUSTER_LIGHT_LOOP
 			#pragma multi_compile _DECAL_NORMAL_BLEND_LOW _DECAL_NORMAL_BLEND_MEDIUM _DECAL_NORMAL_BLEND_HIGH
 			#pragma multi_compile_fragment _ DEBUG_DISPLAY
 			#pragma multi_compile _ _DECAL_LAYERS
@@ -2668,6 +2680,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_DECAL_SCREEN_SPACE_MESH
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -2690,7 +2703,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -3022,11 +3035,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -3048,7 +3061,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -3058,7 +3071,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -3137,13 +3150,14 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#pragma vertex Vert
 			#pragma fragment Frag
 			#pragma multi_compile_instancing
-			#pragma multi_compile_fog
 			#pragma editor_sync_compilation
 
 			#pragma multi_compile _ LIGHTMAP_ON
 			#pragma multi_compile _ DYNAMICLIGHTMAP_ON
 			#pragma multi_compile _ DIRLIGHTMAP_COMBINED
 			#pragma multi_compile _ USE_LEGACY_LIGHTMAPS
+			#pragma multi_compile _ LIGHTMAP_BICUBIC_SAMPLING
+			#pragma multi_compile _ REFLECTION_PROBE_ROTATION
 			#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
@@ -3177,6 +3191,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             #define SHADERPASS SHADERPASS_DECAL_GBUFFER_MESH
 
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Fog.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -3188,7 +3203,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ProbeVolumeVariants.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/GBufferOutput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DecalInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderVariablesDecal.hlsl"
@@ -3200,7 +3215,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
@@ -3515,7 +3530,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			}
 
 			void Frag(PackedVaryings packedInput,
-				out FragmentOutput fragmentOutput
+				out GBufferFragOutput fragmentOutput
 				/*ase_frag_input*/
 			)
 			{
@@ -3531,11 +3546,11 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
             #ifdef _DECAL_LAYERS
             #ifdef _RENDER_PASS_ENABLED
-				uint surfaceRenderingLayer = DecodeMeshRenderingLayer(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r);
+				uint surfaceRenderingLayer = LOAD_FRAMEBUFFER_X_INPUT(GBUFFER4, packedInput.positionCS.xy).r;
             #else
 				uint surfaceRenderingLayer = LoadSceneRenderingLayer(packedInput.positionCS.xy);
             #endif
-				uint projectorRenderingLayer = uint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
+				uint projectorRenderingLayer = asuint(UNITY_ACCESS_INSTANCED_PROP(Decal, _DecalLayerMaskFromDecal));
 				clip((surfaceRenderingLayer & projectorRenderingLayer) - 0.1);
             #endif
 
@@ -3557,7 +3572,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#endif
 
 			#if defined(DECAL_RECONSTRUCT_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy, LOAD_FRAMEBUFFER_X_INPUT(GBUFFER3, packedInput.positionCS.xy).x));
 				#elif defined(_DECAL_NORMAL_BLEND_HIGH)
 					half3 normalWS = half3(ReconstructNormalTap9(packedInput.positionCS.xy));
@@ -3567,7 +3582,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 					half3 normalWS = half3(ReconstructNormalDerivative(packedInput.positionCS.xy));
 				#endif
 			#elif defined(DECAL_LOAD_NORMAL)
-				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60000067 )
+				#if defined(_RENDER_PASS_ENABLED) && ( UNITY_VERSION >= 60030004 )
 					half3 normalWS = normalize(LOAD_FRAMEBUFFER_X_INPUT(GBUFFER2, packedInput.positionCS.xy).rgb);
 				#else
 					half3 normalWS = half3(LoadSceneNormals(packedInput.positionCS.xy));
@@ -3589,61 +3604,61 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				surfaceDescription.NormalTS = /*ase_frag_out:Normal;Float3;2;-1;_NormalTS*/float3(0.0f, 0.0f, 1.0f)/*end*/;
 				surfaceDescription.NormalAlpha = /*ase_frag_out:Normal Alpha;Float;3;-1;_NormalAlpha*/1/*end*/;
 
-			#if defined( _MATERIAL_AFFECTS_MAOS )
-				surfaceDescription.Metallic = /*ase_frag_out:Metallic;Float;4;-1;_Metallic*/0/*end*/;
-				surfaceDescription.Occlusion = /*ase_frag_out:Occlusion;Float;5;-1;_Occlusion*/1/*end*/;
-				surfaceDescription.Smoothness = /*ase_frag_out:Smoothness;Float;6;-1;_Smoothness*/0.5/*end*/;
-				surfaceDescription.MAOSAlpha = /*ase_frag_out:MAOS Alpha;Float;7;-1;_ColorP*/1/*end*/;
-			#endif
+				#if defined( _MATERIAL_AFFECTS_MAOS )
+					surfaceDescription.Metallic = /*ase_frag_out:Metallic;Float;4;-1;_Metallic*/0/*end*/;
+					surfaceDescription.Occlusion = /*ase_frag_out:Occlusion;Float;5;-1;_Occlusion*/1/*end*/;
+					surfaceDescription.Smoothness = /*ase_frag_out:Smoothness;Float;6;-1;_Smoothness*/0.5/*end*/;
+					surfaceDescription.MAOSAlpha = /*ase_frag_out:MAOS Alpha;Float;7;-1;_ColorP*/1/*end*/;
+				#endif
 
-			#if defined( _MATERIAL_AFFECTS_EMISSION )
-				surfaceDescription.Emission = /*ase_frag_out:Emission;Float3;8;-1;_Emission*/float3(0, 0, 0)/*end*/;
-			#endif
+				#if defined( _MATERIAL_AFFECTS_EMISSION )
+					surfaceDescription.Emission = /*ase_frag_out:Emission;Float3;8;-1;_Emission*/float3(0, 0, 0)/*end*/;
+				#endif
 
 				GetSurfaceData(packedInput, surfaceDescription, surfaceData);
 
 				half3 normalToPack = surfaceData.normalWS.xyz;
-			#ifdef DECAL_RECONSTRUCT_NORMAL
-				surfaceData.normalWS.xyz = normalize(lerp(normalWS.xyz, surfaceData.normalWS.xyz, surfaceData.normalWS.w));
-			#endif
+				#ifdef DECAL_RECONSTRUCT_NORMAL
+					surfaceData.normalWS.xyz = normalize(lerp(normalWS.xyz, surfaceData.normalWS.xyz, surfaceData.normalWS.w));
+				#endif
 
-				InputData inputData;
-				InitializeInputData(packedInput, positionWS, surfaceData.normalWS.xyz, viewDirectionWS, inputData);
+					InputData inputData;
+					InitializeInputData(packedInput, positionWS, surfaceData.normalWS.xyz, viewDirectionWS, inputData);
 
-				SurfaceData surface = (SurfaceData)0;
-				GetSurface(surfaceData, surface);
+					SurfaceData surface = (SurfaceData)0;
+					GetSurface(surfaceData, surface);
 
-				BRDFData brdfData;
-				InitializeBRDFData(surface.albedo, surface.metallic, 0, surface.smoothness, surface.alpha, brdfData);
+					BRDFData brdfData;
+					InitializeBRDFData(surface.albedo, surface.metallic, 0, surface.smoothness, surface.alpha, brdfData);
 
-			#ifdef _MATERIAL_AFFECTS_ALBEDO
-				Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, inputData.shadowMask);
-				MixRealtimeAndBakedGI(mainLight, surfaceData.normalWS.xyz, inputData.bakedGI, inputData.shadowMask);
-				half3 color = GlobalIllumination(brdfData, inputData.bakedGI, surface.occlusion, surfaceData.normalWS.xyz, inputData.viewDirectionWS);
-			#else
-				half3 color = 0;
-			#endif
+				#ifdef _MATERIAL_AFFECTS_ALBEDO
+					Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, inputData.shadowMask);
+					MixRealtimeAndBakedGI(mainLight, surfaceData.normalWS.xyz, inputData.bakedGI, inputData.shadowMask);
+					half3 color = GlobalIllumination(brdfData, inputData.bakedGI, surface.occlusion, surfaceData.normalWS.xyz, inputData.viewDirectionWS);
+				#else
+					half3 color = 0;
+				#endif
+	
+				// ShaderPassDecal.hlsl
+				// We can not use usual GBuffer functions (etc. BRDFDataToGbuffer) as we use alpha for blending
+				#pragma warning (disable : 3578) // The output value isn't completely initialized.
+				half3 packedNormalWS = PackGBufferNormal(normalToPack);
+				fragmentOutput.gBuffer0 = half4(surfaceData.baseColor.rgb, surfaceData.baseColor.a);
+				fragmentOutput.gBuffer1 = 0;
+				fragmentOutput.gBuffer2 = half4(packedNormalWS, surfaceData.normalWS.a);
+				fragmentOutput.color = half4(surfaceData.emissive + color, surfaceData.baseColor.a);
 
-			// ShaderPassDecal.hlsl
-			// We can not use usual GBuffer functions (etc. BRDFDataToGbuffer) as we use alpha for blending
-			#pragma warning (disable : 3578) // The output value isn't completely initialized.
-				half3 packedNormalWS = PackNormal(surfaceData.normalWS.xyz);
-				fragmentOutput.GBuffer0 = half4(surfaceData.baseColor.rgb, surfaceData.baseColor.a);
-				fragmentOutput.GBuffer1 = 0;
-				fragmentOutput.GBuffer2 = half4(packedNormalWS, surfaceData.normalWS.a);
-				fragmentOutput.GBuffer3 = half4(surfaceData.emissive + color, surfaceData.baseColor.a);
+				#if defined(GBUFFER_FEATURE_SHADOWMASK)
+					fragmentOutput.shadowMask = inputData.shadowMask;
+				#endif
 
-			#if OUTPUT_SHADOWMASK
-				fragmentOutput.GBuffer4 = inputData.shadowMask; // will have unity_ProbesOcclusion value if subtractive lighting is used (baked)
-			#endif
+				#pragma warning (default : 3578) // Restore output value isn't completely initialized.
 
-			#pragma warning (default : 3578) // Restore output value isn't completely initialized.
-
-			#if defined(DECAL_FORWARD_EMISSIVE)
+				#if defined(DECAL_FORWARD_EMISSIVE)
 				// Emissive need to be pre-exposed
 				outEmissive.rgb = surfaceData.emissive * GetCurrentExposureMultiplier();
 				outEmissive.a = surfaceData.baseColor.a;
-			#endif
+				#endif
 
 			}
 
@@ -3695,7 +3710,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 			#if _RENDER_PASS_ENABLED
 			#define GBUFFER3 0
 			#define GBUFFER4 1
-			#if ( UNITY_VERSION >= 60000067 )
+			#if ( UNITY_VERSION >= 60030004 )
 			FRAMEBUFFER_INPUT_X_FLOAT(GBUFFER3);
 			#else
 			FRAMEBUFFER_INPUT_X_HALF(GBUFFER3);
